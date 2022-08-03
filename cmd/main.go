@@ -22,4 +22,9 @@ func main() {
 	for _, r := range releases {
 		fmt.Printf("Version: %s, phase %s, z-stream: %v\n", r.GetVersion(), r.GetPhase(), r.IsZStream())
 	}
+
+	latest := releases.GetLatestVersion(false)
+	fmt.Printf("Latest Y-Stream: %s\n", latest)
+	latest = releases.GetLatestVersion(true)
+	fmt.Printf("Latest: %s\n", latest)
 }
