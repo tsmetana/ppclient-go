@@ -62,7 +62,7 @@ func (p *ppRelease) IsMaintained() bool {
 }
 
 func (p *ppRelease) IsDeveloped() bool {
-	return p.Phase == "Planning / Development / Testing"
+	return (p.Phase == "Planning / Development / Testing" || p.Phase == "CI / CD")
 }
 
 func (p *ppRelease) IsZStream() bool {
@@ -74,6 +74,10 @@ func (l *PpReleaseList) GetLatestVersion(includeZStream bool) string {
 	sort.Sort(ByVersion(*l))
 	for i = len(*l) - 1; i >= 0; i-- {
 		if !includeZStream && (*l)[i].IsZStream() {
+			continue
+		}
+		if !(*l)[i].IsDeveloped() {
+			// Skip "Concept" releases
 			continue
 		}
 		break
